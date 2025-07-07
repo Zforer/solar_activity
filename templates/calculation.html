@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Вычисление солнечной активности{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h2>Вычисление солнечной активности для конкретной даты</h2>
+        <p>Введите год и месяц с 2025 по 2069 для получения прогноза солнечной активности</p>
+    </div>
+
+    <form method="POST" class="calculation-form">
+        <div class="form-group">
+            <div class="form-row">
+                <div class="form-col">
+                    <label for="year">Год:</label>
+                    <input type="number" id="year" name="year" min="2025" max="2069" value="{{ year if year else 2025 }}" required>
+                </div>
+                <div class="form-col">
+                    <label for="month">Месяц:</label>
+                    <select id="month" name="month" required>
+                        {% for month in range(1, 13) %}
+                            <option value="{{ month }}" {% if month == (month if month else 1) %}selected{% endif %}>
+                                {{ ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'][month-1] }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                <span class="icon">🧮</span>
+                <span>Вычислить</span>
+            </button>
+        </div>
+    </form>
+
+    {% if activity is not none %}
+        <div class="result-card">
+            <div class="result-header">
+                <h3>Прогноз солнечной активности</h3>
+                <div class="date-badge">
+                    {{ ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'][month-1] }} {{ year }}
+                </div>
+            </div>
+
+            <div class="result-content">
+                <div class="activity-indicator">
+                    <div class="indicator-scale"></div>
+                    <div class="indicator-value">{{ "%.2f"|format(activity) }}</div>
+                </div>
+
+                <div class="activity-details">
+                    {% if activity < 50 %}
+                        <p>Очень низкая солнечная активность. Минимальное количество солнечных пятен.</p>
+                    {% elif activity < 100 %}
+                        <p>Низкая солнечная активность. Период солнечного минимума.</p>
+                    {% elif activity < 150 %}
+                        <p>Умеренная солнечная активность. Переходный период.</p>
+                    {% elif activity < 200 %}
+                        <p>Высокая солнечная активность. Период солнечного максимума.</p>
+                    {% else %}
+                        <p>Очень высокая солнечная активность. Многочисленные солнечные пятна и вспышки.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

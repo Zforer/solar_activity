@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="hero">
+        <h2>Исследуйте солнечную активность</h2>
+        <p>Наш портал предоставляет доступ к историческим данным и прогнозам солнечной активности с 1749 по 2069 год.</p>
+    </div>
+
+    <div class="action-buttons">
+        <a href="{{ url_for('history') }}" class="btn btn-primary">
+            <span class="icon">📜</span>
+            <span>История солнечной активности</span>
+        </a>
+        <a href="{{ url_for('calculation') }}" class="btn btn-secondary">
+            <span class="icon">🔮</span>
+            <span>Прогноз солнечной активности</span>
+        </a>
+    </div>
+
+    <div class="graph-form">
+        <h3>График солнечной активности</h3>
+        <p>Выберите временной промежуток для построения графика (2025-2069):</p>
+
+        <form method="POST" action="{{ url_for('graph') }}">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="form-col">
+                        <label for="start_year">Начальный год:</label>
+                        <input type="number" id="start_year" name="start_year" min="2025" max="2069" value="2025" required>
+                    </div>
+                    <div class="form-col">
+                        <label for="start_month">Начальный месяц:</label>
+                        <select id="start_month" name="start_month" required>
+                            {% for month in range(1, 13) %}
+                                <option value="{{ month }}">{{ month }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-col">
+                        <label for="end_year">Конечный год:</label>
+                        <input type="number" id="end_year" name="end_year" min="2025" max="2069" value="2030" required>
+                    </div>
+                    <div class="form-col">
+                        <label for="end_month">Конечный месяц:</label>
+                        <select id="end_month" name="end_month" required>
+                            {% for month in range(1, 13) %}
+                                <option value="{{ month }}" {% if month == 12 %}selected{% endif %}>{{ month }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-accent">
+                <span class="icon">📊</span>
+                <span>Построить график</span>
+            </button>
+        </form>
+    </div>
+
+    {% if plot_url %}
+        <div class="graph-container">
+            <img src="data:image/png;base64,{{ plot_url }}" alt="График солнечной активности">
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}История солнечной активности{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h2>История солнечной активности</h2>
+        <p>Введите год с 1749 по 2024 для получения данных о солнечной активности</p>
+    </div>
+
+    <form method="POST" class="history-form">
+        <div class="form-group">
+            <label for="year">Год:</label>
+            <div class="input-group">
+                <input type="number" id="year" name="year" min="1749" max="2024"
+                       value="{{ year if year else 2000 }}" required>
+                <button type="submit" class="btn btn-primary">
+                    <span class="icon">🔍</span>
+                    <span>Найти</span>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    {% if error %}
+        <div class="alert error">
+            <p>{{ error }}</p>
+        </div>
+    {% endif %}
+
+    {% if activity is not none %}
+        <div class="result-card">
+            <div class="result-header">
+                <h3>Результаты поиска</h3>
+                <div class="year-badge">{{ year }}</div>
+            </div>
+
+            <div class="result-content">
+                <div class="activity-value">
+                    <span class="label">Солнечная активность:</span>
+                    <span class="value">{{ "%.2f"|format(activity) }}</span>
+                </div>
+
+                <div class="activity-scale">
+                    <div class="scale-bar" style="width: {{ (activity / 300 * 100)|round(1) }}%"></div>
+                    <div class="scale-labels">
+                        <span>Низкая</span>
+                        <span>Средняя</span>
+                        <span>Высокая</span>
+                    </div>
+                </div>
+
+                <div class="activity-description">
+                    {% if activity < 50 %}
+                        <p>Очень низкая солнечная активность. Минимальное количество солнечных пятен.</p>
+                    {% elif activity < 100 %}
+                        <p>Низкая солнечная активность. Период солнечного минимума.</p>
+                    {% elif activity < 150 %}
+                        <p>Умеренная солнечная активность. Переходный период.</p>
+                    {% elif activity < 200 %}
+                        <p>Высокая солнечная активность. Период солнечного максимума.</p>
+                    {% else %}
+                        <p>Очень высокая солнечная активность. Многочисленные солнечные пятна и вспышки.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
