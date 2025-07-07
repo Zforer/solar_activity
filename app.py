@@ -46,8 +46,8 @@ def generate_plot(start_year, start_month, end_year, end_month):
     plt.figure(figsize=(12, 6))
     plt.plot(data['month'], data['activity'], 'r-', linewidth=2)
     plt.title(f'Солнечная активность с {start_month}/{start_year} по {end_month}/{end_year}', fontsize=14)
-    plt.xlabel('Месяц', fontsize=12)
-    plt.ylabel('Активность', fontsize=12)
+    plt.xlabel('Время в месяцах', fontsize=12)
+    plt.ylabel('Количество солнечных пятен', fontsize=12)
     plt.grid(True, linestyle='--', alpha=0.7)
     plt.xticks(rotation=45)
     plt.tight_layout()
@@ -99,6 +99,7 @@ def calculation():
     activity = None
     year = None
     month = None
+    rotation = None
 
     if request.method == 'POST':
         year = int(request.form['year'])
@@ -108,8 +109,9 @@ def calculation():
             month_idx = (year - 2025) * 12 + month - 1
             df = load_future_data()
             activity = df.iloc[month_idx]['activity']
+            rotation = (activity / 200 * 180)  # Ограничиваем максимальное значение 200 для шкалы
 
-    return render_template('calculation.html', activity=activity, year=year, month=month)
+    return render_template('calculation.html', activity=activity, year=year, month=month, rotation=rotation)
 
 
 @app.route('/graph', methods=['GET', 'POST'])

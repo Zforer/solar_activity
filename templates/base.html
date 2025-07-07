@@ -28,5 +28,22 @@
             {% block content %}{% endblock %}
         </main>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const gaugeValue = document.querySelector('.gauge-value');
+            if (gaugeValue) {
+                const activity = parseFloat(gaugeValue.textContent);
+                const gaugeContainer = document.querySelector('.gauge-container');
+
+                if (activity > 150) {
+                    gaugeContainer.classList.add('high-activity');
+                } else if (activity > 100) {
+                    gaugeContainer.classList.add('medium-activity');
+                } else {
+                    gaugeContainer.classList.add('low-activity');
+                }
+            }
+        });
+    </script>
 </body>
 </html>

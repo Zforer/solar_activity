@@ -35,20 +35,26 @@
     </form>
 
     {% if activity is not none %}
-        <div class="result-card">
-            <div class="result-header">
-                <h3>Прогноз солнечной активности</h3>
-                <div class="date-badge">
-                    {{ ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'][month-1] }} {{ year }}
+    <div class="result-card">
+        <div class="result-header">
+            <h3>Прогноз солнечной активности</h3>
+            <div class="date-badge">
+                {{ ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'][month-1] }} {{ year }}
+            </div>
+        </div>
+
+        <div class="result-content">
+            <div class="activity-gauge">
+                <div class="gauge-container">
+                    <div class="gauge-fill" style="--wave-height: {{ (activity / 200 * 100)|round(1) }}%">
+                        <div class="wave wave-1"></div>
+                        <div class="wave wave-2"></div>
+                        <div class="wave wave-3"></div>
+                    </div>
+                    <div class="gauge-value">{{ "%.2f"|format(activity) }}</div>
+                    <div class="gauge-border"></div>
                 </div>
             </div>
-
-            <div class="result-content">
-                <div class="activity-indicator">
-                    <div class="indicator-scale"></div>
-                    <div class="indicator-value">{{ "%.2f"|format(activity) }}</div>
-                </div>
-
                 <div class="activity-details">
                     {% if activity < 50 %}
                         <p>Очень низкая солнечная активность. Минимальное количество солнечных пятен.</p>

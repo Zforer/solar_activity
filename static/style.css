@@ -469,3 +469,249 @@ footer {
 .input-group input {
     flex: 1;
 }
+select {
+    appearance: none;
+    background-color: rgba(30, 30, 30, 0.8);
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
+    color: var(--text-primary);
+}
+select option {
+    background-color: var(--surface-dark);
+    color: var(--text-primary);
+    padding: 10px;
+}
+select:focus {
+    background-color: rgba(30, 30, 30, 0.9);
+}
+select::-webkit-scrollbar {
+    width: 8px;
+}
+select::-webkit-scrollbar-track {
+    background: var(--surface-dark);
+}
+select::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 4px;
+}
+.activity-gauge {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.gauge-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: rgba(30, 30, 30, 0.8);
+    box-shadow:
+        0 0 20px rgba(0, 0, 0, 0.5),
+        inset 0 0 10px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.gauge-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: var(--wave-height);
+    transition: height 1s ease-out;
+    overflow: hidden;
+}
+
+.wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(to right,
+        rgba(255, 109, 0, 0.8) 0%,
+        rgba(255, 171, 64, 0.9) 50%,
+        rgba(255, 109, 0, 0.8) 100%);
+    transform-origin: center bottom;
+}
+
+.wave-1 {
+    border-radius: 40% 38%;
+    animation: wave 8s linear infinite;
+}
+
+.wave-2 {
+    border-radius: 42% 40%;
+    animation: wave 10s linear infinite reverse;
+    opacity: 0.7;
+}
+
+.wave-3 {
+    border-radius: 38% 42%;
+    animation: wave 12s linear infinite;
+    opacity: 0.5;
+}
+
+@keyframes wave {
+    0% { transform: translateX(0) rotate(0deg); }
+    50% { transform: translateX(-25%) rotate(2deg); }
+    100% { transform: translateX(-50%) rotate(0deg); }
+}
+
+.gauge-value {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    z-index: 2;
+}
+
+.gauge-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    box-sizing: border-box;
+    z-index: 3;
+}
+
+/* Цветовые уровни и анимация пульсации */
+.high-activity .gauge-fill .wave {
+    background: linear-gradient(to right,
+        rgba(255, 61, 0, 0.8) 0%,
+        rgba(255, 109, 0, 0.9) 50%,
+        rgba(255, 61, 0, 0.8) 100%);
+}
+
+.medium-activity .gauge-fill .wave {
+    background: linear-gradient(to right,
+        rgba(255, 109, 0, 0.8) 0%,
+        rgba(255, 145, 0, 0.9) 50%,
+        rgba(255, 109, 0, 0.8) 100%);
+}
+
+.low-activity .gauge-fill .wave {
+    background: linear-gradient(to right,
+        rgba(255, 145, 0, 0.8) 0%,
+        rgba(255, 171, 64, 0.9) 50%,
+        rgba(255, 145, 0, 0.8) 100%);
+}
+
+@keyframes pulse {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
+}
+
+.high-activity .gauge-fill {
+    animation: pulse 2s infinite;
+}
+.btn:hover {
+    box-shadow: 0 0 15px var(--primary-color);
+    text-shadow: 0 0 10px var(--primary-color);
+}
+.container {
+    animation: fadeIn 0.5s ease-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.container {
+    animation: fadeIn 0.5s ease-out;
+}
+body {
+    cursor: url('sun-cursor.png'), auto;
+}
+a, button {
+    cursor: url('sun-cursor-hover.png'), pointer;
+}
+.header {
+    text-shadow: 0 0 20px rgba(255, 109, 0, 0.7);
+    animation: glow 3s ease-in-out infinite alternate;
+}
+@keyframes glow {
+    from { text-shadow: 0 0 10px rgba(255, 109, 0, 0.5); }
+    to { text-shadow: 0 0 20px rgba(255, 109, 0, 0.9); }
+}
+@media (prefers-color-scheme: light) {
+    :root {
+        --background-dark: #f5f5f5;
+        --text-primary: #333;
+    }
+}
+h1 {
+    background: linear-gradient(90deg, #ff6d00, #ffab40, #ff6d00);
+    background-size: 200% auto;
+    animation: gradient 3s linear infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+@keyframes gradient {
+    to { background-position: 200% center; }
+}
+h2 {
+    background: linear-gradient(90deg, #ff6d00, #ffab40, #ff6d00);
+    background-size: 200% auto;
+    animation: gradient 3s linear infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+@keyframes gradient {
+    to { background-position: 200% center; }
+}
+.separator {
+    background: url('data:image/svg+xml;utf8,<svg ...>') repeat-x;
+    height: 20px;
+    opacity: 0.3;
+}
+.card {
+    background: rgba(30, 30, 30, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.icon {
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+.btn:hover .icon {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 5px rgba(255, 109, 0, 0.7));
+}
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+.important {
+    animation: pulse 2s infinite;
+}
+.tooltip {
+    position: relative;
+}
+.tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    background: rgba(30, 30, 30, 0.9);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    transition: transform 0.2s ease;
+    transform-origin: bottom center;
+}
+.tooltip:hover::after {
+    transform: translateX(-50%) scale(1);
+}
